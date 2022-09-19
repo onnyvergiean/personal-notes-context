@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getActiveNotes } from '../utils/local-data';
+import { getActiveNotes, archiveNote, deleteNote } from '../utils/local-data';
 import MyNoteList from '../components/MyNoteList';
 import SearchBar from '../components/SearchBar';
 import '../styles/styles.css';
@@ -16,6 +16,16 @@ export default function HomePage() {
     setSearchParams({ keyword });
   };
 
+  const onArchiveHandler = (id) => {
+    archiveNote(id);
+    setNotes(getActiveNotes());
+  };
+
+  const onDeleteHandler = (id) => {
+    deleteNote(id);
+    setNotes(getActiveNotes());
+  };
+
   const filteredNotes = notes.filter((note) => {
     return note.title.toLowerCase().includes(keyword.toLowerCase());
   });
@@ -24,7 +34,11 @@ export default function HomePage() {
     <>
       <h1 className="font-medium leading-tight text-3xl m-5">Notes</h1>
       <SearchBar keyword={keyword} keywordChange={onKeywordHandler} />
-      <MyNoteList notes={filteredNotes} />
+      <MyNoteList
+        notes={filteredNotes}
+        onArchive={onArchiveHandler}
+        onDelete={onDeleteHandler}
+      />
     </>
   );
 }
