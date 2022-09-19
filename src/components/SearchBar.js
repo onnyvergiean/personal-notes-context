@@ -6,7 +6,7 @@ export default function SearchBar({ keyword, keywordChange }) {
     <div className="p-4">
       <input
         type="text"
-        className="block p-3 lg:w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 "
+        className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 "
         placeholder="Search Notes"
         value={keyword}
         onChange={(e) => keywordChange(e.target.value)}

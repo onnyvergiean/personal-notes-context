@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MyNoteItem from './MyNoteItem';
 
 export default function MyNoteList({
@@ -8,7 +9,11 @@ export default function MyNoteList({
   onDelete,
 }) {
   if (notes.length === 0) {
-    return <p className="p-4">No notes found</p>;
+    return (
+      <p className="p-4 flex justify-center items-center font-semibold text-lg">
+        No notes found
+      </p>
+    );
   }
   return (
     <>
@@ -31,3 +36,10 @@ export default function MyNoteList({
     </>
   );
 }
+
+MyNoteList.propTypes = {
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onArchive: PropTypes.func,
+  onUnArchive: PropTypes.func,
+  onDelete: PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ArchiveButton from './ArchiveButton';
 import UnArchiveButton from './UnArchiveButton';
@@ -27,13 +28,24 @@ export default function MyNoteItem({
         </div>
         <div className="flex items-center flex-wrap ">
           {archived ? (
-            <UnArchiveButton id={id} onUnArchive={onUnArchive} />
+            <UnArchiveButton id={id} onUnArchive={onUnArchive} size={30} />
           ) : (
-            <ArchiveButton id={id} onArchive={onArchive} />
+            <ArchiveButton id={id} onArchive={onArchive} size={30} />
           )}
-          <DeleteButton id={id} onDelete={onDelete} />
+          <DeleteButton id={id} onDelete={onDelete} size={30} />
         </div>
       </div>
     </>
   );
 }
+
+MyNoteItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  onArchive: PropTypes.func,
+  onUnArchive: PropTypes.func,
+  archived: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};

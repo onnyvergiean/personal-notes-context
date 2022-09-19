@@ -32,7 +32,7 @@ export default function HomePage() {
 
   return (
     <>
-      <h1 className="font-medium leading-tight text-3xl m-5">Notes</h1>
+      <h1 className="font-medium leading-tight text-3xl m-5">Active Notes</h1>
       <SearchBar keyword={keyword} keywordChange={onKeywordHandler} />
       <MyNoteList
         notes={filteredNotes}

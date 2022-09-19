@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[contenteditable='true']:empty:before {
+  content: attr(placeholder);
+  color: gray;
+  pointer-events: none;
+  display: block;
+}
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+.add_note__input {
+  height: 400px;
+}
