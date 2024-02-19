@@ -19,7 +19,7 @@ export default function MyNoteItem({
 }) {
   return (
     <>
-      <div className="p-6 h-full border-2 border-gray-200 border-opacity-60 rounded-lg">
+      <div className="p-6 h-full border-2  border-gray-200 border-opacity-60 rounded-lg dark:text-white dark:hover:text-gray-900 ">
         <div className="cursor-pointer">
           <Link to={`/notes/${id}`}>
             <MyNoteTitle title={title} />

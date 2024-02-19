@@ -1,41 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import parse from 'html-react-parser';
 import { useParams, useNavigate } from 'react-router-dom';
-import {
-  getNote,
-  deleteNote,
-  archiveNote,
-  unarchiveNote,
-} from '../utils/local-data';
+import { getNote, deleteNote, archiveNote, unarchiveNote } from '../utils/api';
+import { ThemeContext } from '../contexts/ThemeContext';
 import { showFormattedDate } from '../utils';
+
 import PageNotFound from './PageNotFound';
 import ArchiveButton from '../components/ArchiveButton';
 import UnArchiveButton from '../components/UnArchiveButton';
 import DeleteButton from '../components/DeleteButton';
+import Spinner from '../components/Spinner';
 
 export default function DetailPage() {
-  const { id } = useParams();
-  const note = getNote(id);
+  const [note, setNote] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const onDeleteHandler = (id) => {
-    deleteNote(id);
+  const { id } = useParams();
+
+  const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    const fetchNote = async () => {
+      try {
+        const { data } = await getNote(id);
+        setNote(data);
+        if (!data) {
+          throw new Error('Note not found');
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    fetchNote();
+  }, [id]);
+
+  const onDeleteHandler = async (id) => {
+    await deleteNote(id);
     navigate('/');
   };
 
-  const onArchiveHandler = (id) => {
-    archiveNote(id);
+  const onArchiveHandler = async (id) => {
+    await archiveNote(id);
     navigate('/notes/archived');
   };
-  const onUnArchiveHandler = (id) => {
-    unarchiveNote(id);
+
+  const onUnArchiveHandler = async (id) => {
+    await unarchiveNote(id);
     navigate('/');
   };
-  if (!note) {
+
+  if (error) {
     return <PageNotFound />;
   }
 
+  if (isLoading) {
+    return (
+      <div className="p-4 bg-gray-50 dark:bg-gray-900 h-screen text-gray-900  dark:text-white ">
+        <div className="pt-36 flex justify-center ">
+          <Spinner
+            type="spinningBubbles"
+            color={theme === 'light' ? 'dark' : 'white'}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4">
+    <div className="p-4 bg-gray-50 dark:bg-gray-900 h-screen text-gray-900  dark:text-white ">
       <h2 className="font-medium leading-tight text-4xl mt-8 mb-2">
         {note.title}
       </h2>

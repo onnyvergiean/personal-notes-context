@@ -10,17 +10,17 @@ export default function MyNoteList({
 }) {
   if (notes.length === 0) {
     return (
-      <p className="p-4 flex justify-center items-center font-semibold text-lg">
+      <p className="pt-36 flex justify-center items-center font-semibold text-lg text-gray-900  dark:text-white">
         No notes found
       </p>
     );
   }
   return (
     <>
-      <div className="p-4 grid lg:grid-cols-4 md:grid-cols-2 gap-4">
+      <div className="p-4 grid lg:grid-cols-4 md:grid-cols-2 gap-4 text-gray-900  dark:text-white dark:hover:text-gray-900">
         {notes.map((note, index) => (
           <div
-            className=" hover:bg-slate-800 hover:text-white transition duration-300 ease-in rounded-lg"
+            className=" hover:bg-slate-800 hover:text-white transition duration-300 ease-in rounded-lg dark:hover:text-gray-900 dark:hover:bg-gray-200"
             key={index}
           >
             <MyNoteItem
